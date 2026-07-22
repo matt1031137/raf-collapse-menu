@@ -96,10 +96,12 @@
 
                     if (isActive) {
                         content.style.height = content.scrollHeight + "px"; // 先設置當前高度
+                        //收合的修改必須用raf，即使上一行已經設定當前高度，此時又改0，瀏覽器可能會把兩次修改合併成一次，導致瞬間收回來。所以用raf包住第二次賦值高度0，強迫瀏覽器認得剛才設定的scrollheight，有明確的原本高度px=>跟0px，觸發transition的轉場。最後再拔掉acitve的class
                         requestAnimationFrame(() => {
                             content.style.height = "0px";
                             content.classList.remove('active')
                         });
+
                     } else {
 
                         content.style.height = content.scrollHeight + "px"; // 先展開到 scrollHeight
