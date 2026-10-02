@@ -49,7 +49,7 @@
 
         .box .content.active {
             /* height: auto; */
-            padding: 8px;
+            padding: var(--pad);
         }
     </style>
 
@@ -61,14 +61,14 @@
 
     <div class="box">
         <p class="title">抬頭1</p>
-        <div class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id qui quam voluptatibus
+        <div class="content" style="--pad: 8px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id qui quam voluptatibus
             reprehenderit, consequatur tempore totam, quibusdam maxime dolor necessitatibus officia. Ut, cupiditate non!
             Fugiat tempora esse aperiam error dicta.</div>
     </div>
 
     <div class="box">
         <p class="title">抬頭2</p>
-        <div class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id qui quam voluptatibus
+        <div class="content" style="--pad: 8px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Id qui quam voluptatibus
             reprehenderit, consequatur tempore totam, quibusdam maxime dolor necessitatibus officia. Ut, cupiditate non!
             Fugiat tempora esse aperiam error dicta.</div>
     </div>
@@ -104,7 +104,9 @@
 
                     } else {
 
-                        content.style.height = content.scrollHeight + "px"; // 先展開到 scrollHeight
+                        // 讀行內定義的 --pad，parseFloat 會自動去掉 px；上下各一份所以 *2
+                        let padding = parseFloat(content.style.getPropertyValue('--pad')) * 2 || 0
+                        content.style.height = (content.scrollHeight + padding) + "px"; // 先展開到 scrollHeight
                         content.classList.add('active')
                         content.addEventListener(
                             "transitionend",
